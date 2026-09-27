@@ -1,0 +1,59 @@
+# Example Home Assistant automations for the candle sensor.
+# Replace entity IDs with the ones created for your device:
+#   ZHA:          binary_sensor.diy_candlesensor_binary_input
+#   Zigbee2MQTT:  binary_sensor.<friendly_name>_flame
+
+- id: candle_lit_too_long
+  alias: "Candle lit for over 2 hours"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_candle_flame
+      to: "on"
+      for: "02:00:00"
+  action:
+    - service: notify.notify
+      data:
+        title: "🕯️ Candle still burning"
+        message: "The living room candle has been lit for 2 hours."
+
+- id: candle_lit_nobody_home
+  alias: "Candle lit and everyone left"
+  trigger:
+    - platform: state
+      entity_id: zone.home
+      to: "0"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_candle_flame
+      state: "on"
+  action:
+    - service: notify.notify
+      data:
+        title: "🔥 Candle left burning!"
+        message: "Nobody is home and the living room candle is still lit."
+
+- id: candle_lit_at_bedtime
+  alias: "Candle lit at bedtime"
+  trigger:
+    - platform: time
+      at: "23:00:00"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.living_room_candle_flame
+      state: "on"
+  action:
+    - service: notify.notify
+      data:
+        message: "Reminder: the living room candle is still lit."
+
+- id: candle_sensor_offline
+  alias: "Candle sensor offline"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.living_room_candle_flame
+      to: "unavailable"
+      for: "00:15:00"
+  action:
+    - service: notify.notify
+      data:
+        message: "The candle sensor has stopped reporting."

@@ -1,0 +1,11 @@
+Ref,Qty,Part,Example part number,Notes
+U1,1,Zigbee MCU board,Seeed Studio XIAO ESP32C6,"ESP32-C6: Zigbee 3.0 + USB-C, 21x17.5 mm"
+Q1,1,IR phototransistor with daylight-blocking filter,Vishay TEFT4300,"Peak 925 nm, +/-30 deg; alt: Osram SFH 309 FA"
+R1,1,Resistor 22k 1%,,Phototransistor load; lower for brighter scenes (see docs/design.md)
+R2,1,Resistor 10k,,Anti-alias RC filter
+C1,1,Capacitor 1uF X7R,,Anti-alias RC filter (fc ~16 Hz)
+C2,1,Capacitor 100nF,,Decoupling at Q1 supply
+U2,1,IR thermometer (optional),MLX90614ESF-DCI (GY-906-DCI module),"3.3 V, 5 deg FOV; the wide 90 deg BAA version will NOT work"
+J1,1,USB-C 5 V supply,,Any 5 V phone charger; device runs as a Zigbee router
+-,1,Enclosure,3D printed,Aperture tube for Q1 + U2 aimed at flame height
+-,1,Mount,,Gooseneck or stand placing sensor 20-40 cm from the candle
